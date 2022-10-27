@@ -1,5 +1,6 @@
-# my_network_as_code
+# My Network as Code
 
-## Building a NetDevOps CI/CD Pipeline. 
+## Built on top of a CI/CD Pipeline. 
 
-### Ref: https://www.youtube.com/watch?v=LinGy8DGIJ8&amp;ab_channel=CiscoDevNet
+#### DevNetOps References
+https://www.youtube.com/watch?v=LinGy8DGIJ8&amp;ab_channel=CiscoDevNet

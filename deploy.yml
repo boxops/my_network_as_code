@@ -1,0 +1,24 @@
+---
+# - name: Gather details about devices
+#   hosts: core
+#   gather_facts: false
+#   tasks:
+#     - name: Gather IOS facts
+#       cisco.ios.ios_facts:
+#         gather_subset: all
+
+- name: Check connectivity
+  hosts: all
+  connection: local
+  gather_facts: false
+
+  roles:
+    - network_connectivity
+
+# - name: Configure network core
+#   hosts: core
+#   connection: local
+#   gather_facts: false
+
+#   roles:
+#     - network_interface

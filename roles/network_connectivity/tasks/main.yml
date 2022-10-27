@@ -1,6 +1,5 @@
 ---
 - name: Test connectivity
-  hosts: all
   connection: local
   gather_facts: false
 

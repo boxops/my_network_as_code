@@ -1,0 +1,4 @@
+---
+ansible_network_os: ios
+ospf:
+  process_id: 1

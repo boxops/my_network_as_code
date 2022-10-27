@@ -1,0 +1,20 @@
+---
+ansible_python_interpreter: /usr/bin/env python
+ansible_user: devbox
+ansible_ssh_private_key_file: ~/.ssh/nac
+ansible_connection: network_cli
+snmp_ro_community: public
+snmp_rw_community: private
+vlans:
+  - id: 100
+    name: Management
+    gateway: 172.16.100.1
+  - id: 101
+    name: Engineering
+    gateway: 172.16.101.1
+  - id: 102
+    name: Security
+    gateway: 172.16.102.1
+  - id: 103
+    name: Guest
+    gateway: 172.16.103.1
