@@ -1,0 +1,8 @@
+[R1]
+192.168.111.1
+
+[R1:vars]
+ansible_user = devbox
+ansible_ssh_private_key_file = ~/.ssh/R1
+ansible_network_os = ios
+ansible_connection = network_cli

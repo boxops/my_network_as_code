@@ -1,0 +1,9 @@
+---
+- name: Gather details about devices
+  hosts: R1
+  gather_facts: false
+
+  tasks:
+    - name: Gather IOS facts
+      cisco.ios.ios_facts:
+        gather_subset: all
