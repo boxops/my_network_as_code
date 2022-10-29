@@ -1,0 +1,4 @@
+---
+ansible_network_os: junos
+osfp:
+  process_id: 1

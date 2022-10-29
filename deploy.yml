@@ -1,24 +1,37 @@
 ---
-# - name: Gather details about devices
-#   hosts: core
-#   gather_facts: false
-#   tasks:
-#     - name: Gather IOS facts
-#       cisco.ios.ios_facts:
-#         gather_subset: all
-
-- name: Check connectivity
-  hosts: all
-  connection: local
+- name: Get device facts
+  hosts: juniper
+  connection: ansible.netcommon.netconf
   gather_facts: false
 
-  roles:
-    - network_connectivity
+  tasks:
+    # - name: Retrieve Junos OS version
+    #   junipernetworks.junos.junos_command:
+    #     commands: show version
+    #   when: ansible_network_os == 'junipernetworks.junos.junos'
 
-# - name: Configure network core
-#   hosts: core
-#   connection: local
-#   gather_facts: false
+    - name: Enable NETCONF
+      connection: ansible.netcommon.network_cli
+      junipernetworks.junos.junos_netconf:
+      when: ansible_network_os == 'junipernetworks.junos.junos'
 
-#   roles:
-#     - network_interface
+    - name: Backup Junos config
+      junipernetworks.junos.junos_config:
+        backup: true
+        backup_options:
+          filename: srx_backup.conf
+          dir_path: /home/user
+      when: ansible_network_os == 'junipernetworks.junos.junos'
+
+    - name: Gather running vlans config
+      junipernetworks.junos.junos_vlans:
+        state: gathered
+
+    - name: Add OSPF config
+      junipernetworks.junos.junos_routing_options:
+        config:
+          autonomous_system:
+            as_number: 65556
+            asdot_notation: true
+          router_id: "1.1.1.1"
+        state: overridden

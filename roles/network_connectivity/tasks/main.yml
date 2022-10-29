@@ -1,8 +1,0 @@
-# ---
-# - name: Test connectivity
-#   connection: local
-#   gather_facts: false
-
-#   tasks:
-#     - name: Ping
-#       ansible.builtin.ping:

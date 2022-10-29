@@ -1,4 +1,0 @@
----
-ansible_network_os: iosxe
-osfp:
-  process_id: 1
