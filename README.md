@@ -6,16 +6,10 @@ A configuration management program that defines a network infrastructure in code
 Setup
 -----
 
-Tested on Ubuntu 22.04 operating system.
+Tested on Ubuntu 22.04 LTS operating system.
 ```bash
 $ git clone https://github.com/boxops/my_network_as_code.git
 $ cd my_network_as_code
-```
-
-Requirements
-------------
-
-```bash
 $ python3 -m venv venv
 $ source venv/bin/activate
 $ python3 -m pip install requirements.txt
