@@ -24,14 +24,14 @@ $ python3 -m pip install requirements.txt
 Variables
 ---------
 
-Make sure to use your own unique variables in ```vars/all.yml``` file and also update the path to the SSH private key file in ```ansible.cfg```.
+Make sure to use your own unique variables in ```vars/all.yml```, ```ansible.cfg```, and ```[staging|production]_inventory.ini``` files.
 
 Testing
 -------
 
 Lint playbooks, roles and collections:
 ```bash
-$ ansible-lint playbook.yml
+$ ansible-lint main.yml
 ```
 
 Validation
