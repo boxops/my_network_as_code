@@ -12,5 +12,4 @@ junos_netconf_port: 830
 junos_netconf_state: present
 
 # junos_backup role
-junos_backup_filename: srx_backup.conf
 junos_backup_dir_path: backups
