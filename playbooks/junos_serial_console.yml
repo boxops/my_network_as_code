@@ -1,0 +1,26 @@
+---
+# Ref: https://www.juniper.net/documentation/us/en/software/junos-ansible/ansible/topics/topic-map/junos-ansible-connection-methods.html
+
+- name: Load Initial Configuration
+  hosts: juniper
+  connection: local
+  gather_facts: false
+  vars_files:
+    - ../vars/all.yml
+
+  vars_prompt:
+    - name: "DEVICE_PASSWORD"
+      prompt: "Device Password"
+      private: yes
+
+  tasks:
+    - name: Load initial configuration and commit
+      juniper.device.config:
+        passwd: "{{ DEVICE_PASSWORD }}"
+        mode: "serial"
+        load: "merge"
+        src: "{{ junos_serial_console_init_conf_path }}"
+      register: response
+    - name: Print the response
+      ansible.builtin.debug:
+        var: response

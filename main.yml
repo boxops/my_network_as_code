@@ -1,67 +1,11 @@
 ---
-- name: Deploy Juniper config
+- name: Configure Juniper Node
   hosts: juniper
-  connection: ansible.netcommon.netconf
+  connection: netconf
   gather_facts: false
-
-  tasks:
-    # - name: Retrieve Junos OS version
-    #   junipernetworks.junos.junos_command:
-    #     commands: show version
-    #   when: ansible_network_os == 'junipernetworks.junos.junos'
-
-    - name: Enable NETCONF
-      connection: ansible.netcommon.network_cli
-      junipernetworks.junos.junos_netconf:
-      when: ansible_network_os == 'junipernetworks.junos.junos'
-
-    - name: Backup Junos config
-      junipernetworks.junos.junos_config:
-        backup: true
-        backup_options:
-          filename: srx_backup.conf
-          dir_path: /home/user
-      when: ansible_network_os == 'junipernetworks.junos.junos'
-
-    - name: Gather running vlans config
-      junipernetworks.junos.junos_vlans:
-        state: gathered
-
-    - name: Add OSPF config
-      junipernetworks.junos.junos_routing_options:
-        config:
-          autonomous_system:
-            as_number: 65556
-            asdot_notation: true
-          router_id: "1.1.1.1"
-        state: overridden
-
-- name: Deploy Cisco config
-  hosts: cisco
-  connection: ansible.netcommon.network_cli
-  gather_facts: false
-
-  tasks:
-    - name: Backup Cisco config
-      cisco.ios.ios_config:
-        backup: true
-        backup_options:
-          filename: ios_backup.conf
-          dir_path: /home/user/
-
-    - name: Add OSPF config
-      cisco.ios.ios_ospf_interfaces:
-        config:
-          - name: GigabitEthernet1
-            address_family:
-              - afi: ipv4
-                process:
-                  id: 1
-                  area_id: 0
-                adjacency: true
-                # cost:
-                #   interface_cost: 30
-                # priority: 40
-                # ttl_security:
-                #   hops: 50
-        state: overridden
+  vars_files:
+    - vars/all.yml
+  roles:
+    - junos_backup
+    - junos_netconf
+    - junos_ospfv2

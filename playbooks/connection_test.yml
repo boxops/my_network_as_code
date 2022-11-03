@@ -1,9 +1,9 @@
 ---
 - name: Test connectivity
   hosts: all
-  connection: local
   gather_facts: false
 
   tasks:
-    - name: Ping
+    - name: Test connection
       ansible.builtin.ping:
+        data: pong

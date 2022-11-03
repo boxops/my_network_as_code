@@ -1,0 +1,23 @@
+---
+- name: "Compare configurations"
+  hosts: juniper 
+  connection: local
+  gather_facts: false
+
+  vars_prompt:
+    - name: "ROLLBACK"
+      prompt: "Rollback ID to compare with active configuration" 
+      private: false
+
+  tasks:
+    - name: "Compare active to previous configuration"
+      juniper.device.config:
+        diff: true
+        rollback: "{{ ROLLBACK }}"    
+        check: false
+        commit: false
+        diffs_file: "../configs/{{ inventory_hostname }}-diff-rollback-{{ ROLLBACK }}"
+      register: response
+    - name: "Print diff"
+      ansible.builtin.debug:
+        var: response

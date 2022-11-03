@@ -1,0 +1,7 @@
+---
+- name: Backup Junos config
+  junipernetworks.junos.junos_config:
+    backup: true
+    backup_options:
+      filename: "{{ junos_backup_filename }}"
+      dir_path: "{{ junos_backup_dir_path }}"
