@@ -14,7 +14,7 @@ $ git clone https://github.com/boxops/my_network_as_code.git
 $ cd my_network_as_code
 $ python3 -m venv venv
 $ source venv/bin/activate
-$ python3 -m pip install requirements.txt
+$ python3 -m pip install -r requirements.txt
 ```
 
 Variables
