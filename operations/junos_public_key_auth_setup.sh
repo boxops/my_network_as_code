@@ -1,7 +1,10 @@
 #!/bin/bash
-# Silently generate SSH keys and append it to a remote host.
 
-# Execute without sudo permissions.
+# Purpose: Silently generate an SSH key and append it to a remote Juniper node.
+
+# Requirements: The script assumes that the local DevBox has SSH access to the target Juniper node.
+
+# Usage: Execute without sudo permissions.
 # ./public_key_auth_setup.sh
 
 DEFAULTSSHFILENAME="id_rsa"
