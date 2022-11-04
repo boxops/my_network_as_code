@@ -1,0 +1,16 @@
+---
+- name: "Load and commit configuration"
+  hosts: juniper
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: "Load configuration from a local file and commit"
+      juniper.device.config:
+        load: "merge"
+        src: "../builds/{{ inventory_hostname }}.set"
+        comment: "[ Configured by Ansible ]"
+      register: response
+    - name: "Print the response"
+      ansible.builtin.debug:
+        var: response

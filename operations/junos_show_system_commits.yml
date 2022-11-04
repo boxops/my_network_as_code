@@ -1,0 +1,14 @@
+---
+- name: "Show commits before comparing configurations"
+  hosts: juniper 
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: "Send show system commits command"
+      juniper.device.command:
+        commands: "show system commit"
+      register: show_commits
+    - name: "Print system commits"
+      ansible.builtin.debug:
+        var: show_commits

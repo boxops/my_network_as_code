@@ -1,0 +1,17 @@
+---
+- name: "Load and commit configuration"
+  hosts: juniper
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: "Load configuration from a remote file and commit"
+      juniper.device.config:
+        load: "merge"
+        # Load from a config file on the managed device 
+        url: "/var/tmp/junos.conf"
+        comment: "[ Configured by Ansible ]"
+      register: response
+    - name: "Print the response"
+      ansible.builtin.debug:
+        var: response

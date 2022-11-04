@@ -1,0 +1,29 @@
+
+set version 20200319.130545_builder.r1095278
+set groups global security policies default-policy permit-all
+set system host-name vSRX-NG-1
+set system root-authentication encrypted-password "$6$ss4GV4Gy$wIcEFgVARYqDuBjBjza3tWO/B5QzznQLDIRGeLFGmQCSV2qYeWFzsr0Xs9MomgQucd3WHZhA2TvOqrNGxIh2P1"
+set system login user admin uid 2001
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$6$F1U5Ppiu$xNlFcGo6FPVc7dvgmRTrwmL5eBDHVxS1NmWD5DhW6u3KMrNIB9tJQMVpmydLQ.i4mQcB/Itep1xmc3JyTK10B1"
+set system login user admin authentication ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCK5tAsUFHjRlUzgn8uVmEoMFhSGnrEy2tFfqSZXwc0zN9lnSSUECPvTt5WV7V2P+jJO20HwfyqpzGSH6O66qfSixjoTDjfxZ3+ZdCLlERcyj04RA/Cj7vo0M6/zyKVTI9cBwhbwSvrNWoWRXdCpaqx5Y+HfcOf2mxijV3e33ZHtYrUZ8xMkEeVdq9fm9vEJTxI4hWLZaunV6324+xcTNvelQt5e79UmcrZfc3QWv1wwz7qzZ2MscAhsAoGySdlxKEQ2ww7WK6k8XX/ddN9mNhXwt06hQIlyvHKECNEbs1h9hsal8UiXOKfwNXytOp9y/aWqcQoq7Vgm1OOoBATXOv7KdITo1mh3t/NwpCSgmsz92NTste35t8CL7EFWJ5dBncToBCumUrk3GA5AA0sZmLNe/zPN51LJwY7hn+ksZQqfz4vIl2Ujl6xZ1TvhtzIHMXaHYYIm1dmAytWtfMGbDolRdL19BhI0xuRlZ+xKXYPaNyajHHdtEGrwU37v+8ZSzirOCvks6V/2Z4HoS+a+6g5tYCmd8QFvmjiIP6rJPPWQufr6t66vJQHk06AjHS1w4CspFcD3X/UA5zWsINWILpAKpPGB+89EGG9LFUJVZdI3iM/UGB8x18zpOqqoNy8BXSiHujHku1l8mP5L113ikTK/znlDduSFjeHWqw0AbCwOQ== user@eve"
+set system login user devbox uid 2000
+set system login user devbox class super-user
+set system login user devbox authentication ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCK5tAsUFHjRlUzgn8uVmEoMFhSGnrEy2tFfqSZXwc0zN9lnSSUECPvTt5WV7V2P+jJO20HwfyqpzGSH6O66qfSixjoTDjfxZ3+ZdCLlERcyj04RA/Cj7vo0M6/zyKVTI9cBwhbwSvrNWoWRXdCpaqx5Y+HfcOf2mxijV3e33ZHtYrUZ8xMkEeVdq9fm9vEJTxI4hWLZaunV6324+xcTNvelQt5e79UmcrZfc3QWv1wwz7qzZ2MscAhsAoGySdlxKEQ2ww7WK6k8XX/ddN9mNhXwt06hQIlyvHKECNEbs1h9hsal8UiXOKfwNXytOp9y/aWqcQoq7Vgm1OOoBATXOv7KdITo1mh3t/NwpCSgmsz92NTste35t8CL7EFWJ5dBncToBCumUrk3GA5AA0sZmLNe/zPN51LJwY7hn+ksZQqfz4vIl2Ujl6xZ1TvhtzIHMXaHYYIm1dmAytWtfMGbDolRdL19BhI0xuRlZ+xKXYPaNyajHHdtEGrwU37v+8ZSzirOCvks6V/2Z4HoS+a+6g5tYCmd8QFvmjiIP6rJPPWQufr6t66vJQHk06AjHS1w4CspFcD3X/UA5zWsINWILpAKpPGB+89EGG9LFUJVZdI3iM/UGB8x18zpOqqoNy8BXSiHujHku1l8mP5L113ikTK/znlDduSFjeHWqw0AbCwOQ== user@eve"
+set system services ssh
+set system services netconf ssh port 830
+set system services outbound-ssh client outbound-ssh device-id router1
+set system services outbound-ssh client outbound-ssh secret "$9$Yo4JUqmT/CujHCuO1yrYgoJjH.P5F69"
+set system services outbound-ssh client outbound-ssh services netconf
+set system services outbound-ssh client outbound-ssh 192.168.112.2 port 2200
+set security policies
+set security zones security-zone trust
+set security zones security-zone untrust
+set security zones security-zone Trust host-inbound-traffic system-services all
+set security zones security-zone Trust host-inbound-traffic protocols all
+set security zones security-zone Trust interfaces ge-0/0/0.0
+set interfaces ge-0/0/0 unit 0 family inet address 10.1.3.2/24
+set protocols ospf area 0.0.0.0 interface ge-0/0/0.0
+set routing-options router-id 1.1.1.1
+set routing-options autonomous-system 65556
+set routing-options autonomous-system asdot-notation

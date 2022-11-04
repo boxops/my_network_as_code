@@ -4,9 +4,6 @@ ansible_python_interpreter: /usr/bin/python3
 ansible_user: devbox
 ansible_ssh_private_key_file: ~/.ssh/nac
 
-# junos_serial_console role
-junos_serial_console_init_conf_path: configs/junos_init.conf
-
 # junos_netconf role
 junos_netconf_port: 830
 junos_netconf_state: present

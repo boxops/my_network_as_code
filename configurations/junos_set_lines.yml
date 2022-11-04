@@ -1,0 +1,17 @@
+---
+- name: "Configure Device" 
+  hosts: juniper
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: "Configure op script"
+      juniper.device.config:
+        config_mode: "private"
+        load: "set"
+        lines:
+          - "set system scripts op file bgp.slax"
+      register: response
+    - name: "Print the config changes"
+      ansible.builtin.debug:
+        var: response.diff_lines

@@ -10,14 +10,15 @@
       private: false
 
   tasks:
-    - name: "Compare active to previous configuration"
+    - name: "Compare active to previous configuration and save to a file"
       juniper.device.config:
         diff: true
         rollback: "{{ ROLLBACK }}"    
         check: false
         commit: false
-        diffs_file: "../configs/{{ inventory_hostname }}-diff-rollback-{{ ROLLBACK }}"
-      register: response
+        # Save diffs to a file:
+        diffs_file: "../diffs/{{ inventory_hostname }}-diff-rollback-{{ ROLLBACK }}"
+      register: diff
     - name: "Print diff"
       ansible.builtin.debug:
-        var: response
+        var: diff

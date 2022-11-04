@@ -1,0 +1,35 @@
+---
+# Ref: https://www.juniper.net/documentation/us/en/software/junos-ansible/ansible/topics/topic-map/junos-ansible-configuration-loading-committing.html
+- name: "Show Junos OS configuration"
+  hosts: juniper
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: "Show committed configuration"
+      juniper.device.config:
+        retrieve: "committed"
+      register: committed
+    - name: "Print committed configuration"
+      ansible.builtin.debug:
+        var: committed
+
+    - name: "Show filtered configuration hierarchies"
+      juniper.device.config:
+        retrieve: "committed"
+        filter: "<configuration><interfaces/><protocols/></configuration>"
+      register: filtered
+    - name: "Print filtered result from committed configuration"
+      ansible.builtin.debug:
+        var: filtered
+
+    - name: "Show system services from configuration hierarchies"
+      juniper.device.config:
+        retrieve: "committed"
+        filter: "system/services"
+        # Supported formats: xml, json, text, set
+        format: "set"
+      register: services
+    - name: "Print filtered result from committed configuration"
+      ansible.builtin.debug:
+        var: services

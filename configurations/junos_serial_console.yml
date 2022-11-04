@@ -5,8 +5,6 @@
   hosts: juniper
   connection: local
   gather_facts: false
-  vars_files:
-    - ../vars/all.yml
 
   vars_prompt:
     - name: "DEVICE_PASSWORD"
@@ -19,7 +17,8 @@
         passwd: "{{ DEVICE_PASSWORD }}"
         mode: "serial"
         load: "merge"
-        src: "{{ junos_serial_console_init_conf_path }}"
+        commit: true
+        src: "../builds/junos_init.set"
       register: response
     - name: Print the response
       ansible.builtin.debug:

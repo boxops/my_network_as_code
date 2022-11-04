@@ -1,0 +1,4 @@
+
+[edit system]
+-  host-name vSRX-1;
++  host-name vSRX-NG-1;

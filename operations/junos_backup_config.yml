@@ -1,0 +1,12 @@
+---
+- name: "Get Junos OS configuration"
+  hosts: juniper
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: "Save configuration to a file"
+      juniper.device.config:
+        retrieve: "committed"
+        format: "set"
+        dest_dir: "../backups"

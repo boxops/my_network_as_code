@@ -1,6 +1,7 @@
+
 set version 20200319.130545_builder.r1095278
 set groups global security policies default-policy permit-all
-set system host-name vSRX-NG-1
+set system host-name vSRX-EVE-NG-1
 set system root-authentication encrypted-password "$6$ss4GV4Gy$wIcEFgVARYqDuBjBjza3tWO/B5QzznQLDIRGeLFGmQCSV2qYeWFzsr0Xs9MomgQucd3WHZhA2TvOqrNGxIh2P1"
 set system login user admin uid 2001
 set system login user admin class super-user
