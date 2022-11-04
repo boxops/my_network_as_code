@@ -1,8 +1,0 @@
-- name: Timestamp
-  hosts: localhost
-  vars:
-    date: "{{ lookup('pipe', 'date +%H%M_%d%m%Y') }}"
-  tasks:
-    - name: Print time
-      ansible.builtin.debug: 
-        msg: "{{ date }}"
