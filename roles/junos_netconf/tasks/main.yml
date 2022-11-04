@@ -2,11 +2,11 @@
 - name: Configure NETCONF
   connection: network_cli
   junipernetworks.junos.junos_netconf:
-    netconf_port: "{{ junos_netconf_port }}"
-    state: "{{ junos_netconf_state }}"
+    netconf_port: 830
+    state: present
 
 - name: Check NETCONF connectivity
   ansible.builtin.wait_for:
     host: "{{ inventory_hostname }}"
-    port: "{{ junos_netconf_port }}"
+    port: 830
     timeout: 5

@@ -1,0 +1,14 @@
+---
+- name: "Revert to rescue configuration"
+  hosts: juniper 
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: "Load and commit rescue configuration"
+      juniper.device.config:
+        rollback: "rescue"   
+      register: response
+    - name: "Print response"
+      ansible.builtin.debug:
+        var: response

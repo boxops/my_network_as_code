@@ -16,9 +16,13 @@
       juniper.device.config:
         passwd: "{{ DEVICE_PASSWORD }}"
         mode: "serial"
+        # Default port: /dev/ttyUSB0
+        port: "/dev/ttyUSB0"
         load: "merge"
+        format: set
         commit: true
         src: "../builds/junos_init.set"
+        comment: "[ Configured by Ansible ]"
       register: response
     - name: Print the response
       ansible.builtin.debug:

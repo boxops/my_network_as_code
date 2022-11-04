@@ -1,4 +1,7 @@
 ---
+# Ref: Config load types and definitions
+# https://www.juniper.net/documentation/us/en/software/junos-ansible/ansible/topics/topic-map/junos-ansible-configuration-loading-committing.html
+
 - name: "Load and commit configuration"
   hosts: juniper
   connection: local

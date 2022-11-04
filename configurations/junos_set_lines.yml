@@ -11,6 +11,8 @@
         load: "set"
         lines:
           - "set system scripts op file bgp.slax"
+        ignore_warning: true
+        comment: "[ Configured by Ansible ]"
       register: response
     - name: "Print the config changes"
       ansible.builtin.debug:

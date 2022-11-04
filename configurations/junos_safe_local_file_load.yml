@@ -1,0 +1,29 @@
+---
+- name: "Load configuration and confirm within 5 minutes"
+  hosts: juniper
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: "Load configuration. Wait 10 seconds between check and commit. Confirm within 5 min." 
+      juniper.device.config:
+        load: "merge"
+        format: "set"
+        src: "../builds/{{ inventory_hostname }}.set"
+        check_commit_wait: 10
+        confirmed: 5
+        comment: "[ Configured by Ansible ]"
+      register: response
+    - name: "Print the response"
+      ansible.builtin.debug:
+        var: response
+
+    - name: "Confirm the commit with a commit check" 
+      juniper.device.config:
+        check: true
+        diff: false
+        commit: false
+      register: response
+    - name: "Print the response"
+      ansible.builtin.debug:
+        var: response

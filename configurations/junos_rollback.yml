@@ -1,0 +1,19 @@
+---
+- name: "Roll back the configuration"
+  hosts: juniper 
+  connection: local
+  gather_facts: no
+
+  vars_prompt:
+    - name: "ROLLBACK"
+      prompt: "Rollback ID of the configuration to restore"
+      private: no
+
+  tasks:
+    - name: "Roll back the configuration and commit"
+      juniper.device.config:
+        rollback: "{{ ROLLBACK }}" 
+      register: response
+    - name: "Print the configuration changes"
+      ansible.builtin.debug:
+        var: response.diff_lines

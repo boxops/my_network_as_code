@@ -8,7 +8,7 @@
     - name: "Load a configuration from a Jinja2 template and commit"
       juniper.device.config:
         load: "merge"
-        template: "templates/interfaces_mpls.j2"
+        template: "../templates/interfaces_mpls.j2"
         format: "text"
         vars:
           interfaces: ["ge-0/0/1", "ge-0/0/2"]
