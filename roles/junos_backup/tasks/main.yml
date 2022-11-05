@@ -1,9 +1,10 @@
 ---
 - name: Backup Junos config
-  vars:
-    date: "{{ lookup('pipe', 'date +%H%M_%d%m%Y') }}"
+  # vars:
+  #   date: "{{ lookup('pipe', 'date +%H%M_%d%m%Y') }}"
   junipernetworks.junos.junos_config:
     backup: true
     backup_options:
-      filename: "{{ date }}_{{ inventory_hostname }}"
-      dir_path: "{{ junos_backup_dir_path }}"
+      backup_format: set
+      filename: "{{ inventory_hostname }}"
+      dir_path: backups

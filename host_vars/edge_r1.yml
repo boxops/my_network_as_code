@@ -1,0 +1,10 @@
+---
+interfaces:
+  - junos_if: "ge-0/0/1"
+    unit: 0
+    desc: "VLAN Bridge"
+    enabled: "true"
+    subint:
+      vlans:
+      - 102
+      - 202

@@ -1,10 +1,7 @@
 ---
 - name: Configure Juniper Node
-  hosts: junos
+  hosts: edge_r1
   connection: netconf
   gather_facts: false
-  vars_files:
-    - vars/all.yml
-  roles:
-    - junos_backup
-    - junos_netconf
+  # roles:
+  #   - junos_interface
