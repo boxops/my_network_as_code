@@ -1,6 +1,6 @@
 ---
 - name: "Configure Device" 
-  hosts: juniper
+  hosts: junos
   connection: local
   gather_facts: no
 

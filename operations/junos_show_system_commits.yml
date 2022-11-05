@@ -1,6 +1,6 @@
 ---
 - name: "Show commits before comparing configurations"
-  hosts: juniper 
+  hosts: junos 
   connection: local
   gather_facts: false
 

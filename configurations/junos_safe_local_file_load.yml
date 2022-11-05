@@ -1,6 +1,6 @@
 ---
 - name: "Load configuration and confirm within 5 minutes"
-  hosts: juniper
+  hosts: junos
   connection: local
   gather_facts: no
 

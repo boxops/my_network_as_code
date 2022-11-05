@@ -1,6 +1,6 @@
 ---
 - name: "Load and commit configuration"
-  hosts: juniper
+  hosts: junos
   connection: local
   gather_facts: no
 

@@ -1,6 +1,6 @@
 ---
 - name: "Revert to rescue configuration"
-  hosts: juniper 
+  hosts: junos 
   connection: local
   gather_facts: no
 

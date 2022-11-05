@@ -1,6 +1,6 @@
 ---
 - name: "Compare configurations"
-  hosts: juniper 
+  hosts: junos 
   connection: local
   gather_facts: false
 

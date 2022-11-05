@@ -1,6 +1,6 @@
 ---
 - name: Configure Juniper Node
-  hosts: juniper
+  hosts: junos
   connection: netconf
   gather_facts: false
   vars_files:

@@ -2,7 +2,7 @@
 # Ref: https://www.juniper.net/documentation/us/en/software/junos-ansible/ansible/topics/topic-map/junos-ansible-connection-methods.html
 
 - name: Load Initial Configuration
-  hosts: juniper
+  hosts: junos
   connection: local
   gather_facts: false
 

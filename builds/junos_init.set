@@ -1,10 +1,9 @@
 set system host-name vSRX-NG-1
-set system domain-name example.com
 set system login user devbox class super-user
 set system services ssh
 set system services netconf ssh port 830
-set interfaces ge-0/0/0.0 unit 0 family inet address 10.1.1.1/24
-set system name-server 1.1.1.1
+set interfaces ge-0/0/0 unit 0 family inet address 10.1.1.1/24
 set security zones security-zone Trust host-inbound-traffic system-services all
 set security zones security-zone Trust host-inbound-traffic protocols all
-set security zones security-zone Trust interfaces ge-0/0/0.0
+set security zones security-zone Trust interfaces ge-0/0/0
+set routing-options static route 10.1.1.0/24 next-hop 10.1.2.1

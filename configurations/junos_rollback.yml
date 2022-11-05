@@ -1,6 +1,6 @@
 ---
 - name: "Roll back the configuration"
-  hosts: juniper 
+  hosts: junos 
   connection: local
   gather_facts: no
 
