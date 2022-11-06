@@ -1,0 +1,8 @@
+# TODO: Write a playbook that:
+
+# 1. Collects LLDP information from devices using 'show lldp neighbors'
+
+# 2. Adds descriptions to interfaces based on the collected information in the following format:
+# set interfaces {local_port} description "Connected to {remote_device}'s {remote_port}"
+
+# 3. Use commit comment: [Configured by Ansible]
