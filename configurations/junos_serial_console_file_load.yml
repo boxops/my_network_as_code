@@ -18,7 +18,7 @@
         mode: "serial"
         # Default port: /dev/ttyUSB0
         port: "/dev/ttyUSB0"
-        load: "merge"
+        load: "override"
         format: set
         commit: true
         src: "../builds/junos_init.set"

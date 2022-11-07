@@ -8,5 +8,5 @@
     - name: "Save configuration to a file"
       juniper.device.config:
         retrieve: "committed"
-        format: "set"
+        format: "text"
         dest_dir: "../backups"
