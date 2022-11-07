@@ -1,10 +1,12 @@
 ---
 - name: Configure Juniper Node
-  hosts: edge_r1
+  hosts: edge
   connection: netconf
   gather_facts: false
-  # roles:
-  #   - junos_interface
+  roles:
+    # - junos_interface
+    - junos_security_zone
+
 
 # TODO:
 # 1. Construct a template using different roles (each role appends config to the template)

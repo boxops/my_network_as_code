@@ -1,0 +1,10 @@
+---
+- name: Define Firewall Zones
+  junos_config:
+    src: zones.j2
+  when:
+    - zones is defined
+
+- name: Add interfaces to zones
+  junos_config:
+    src: int_zones.j2

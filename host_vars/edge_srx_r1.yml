@@ -1,0 +1,34 @@
+---
+interfaces:
+  - name: ge-0/0/1
+    ipv4_address: 10.2.1.1/24
+    state: merged
+    if_zone: "EDGE"
+
+zones:
+  - name: "EDGE"
+    host_traffic:
+      protocols:
+        - bgp
+      services:
+        - ping
+        - traceroute
+  - name: "INTERNET"
+    nat: 
+      role: "outside"
+    host_traffic:
+      services:
+        - ping
+        - traceroute
+        - dhcp
+  - name: "INTERNAL"
+    nat:
+      role: "inside"
+    host_traffic:
+      protocols:
+        - bgp
+        - ospf
+        - ospf3
+      services:
+        - ping
+        - traceroute

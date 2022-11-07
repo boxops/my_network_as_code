@@ -1,41 +1,9 @@
 ---
-- name: Configure subinterfaces first
-  junipernetworks.junos.junos_config:
-    src: interfaces.j2
-    src_format: set
-
-- name: Configure interfaces - Status and Descriptions
-  junipernetworks.junos.junos_interfaces:
+- name: Merge L3 interface configuration
+  junipernetworks.junos.junos_l3_interfaces:
     config:
-      - name: "{{ item.junos_if }}"
-        description: "{{ item.desc }}"
-        enabled: "{{ item.enabled }}"
-  when: item.unit == 0
+      - name: "{{ item.name }}"
+        ipv4: 
+          - address: "{{ item.ipv4_address }}"
+    state: "{{ item.state }}"
   loop: "{{ interfaces }}"
-
-# - name: Configure subinterfaces - Descriptions
-#   junipernetworks.junos.junos_config:
-#     src: descs.j2
-#     src_format: set
-
-# - name: Configure interfaces - L3 IPv4
-#   junipernetworks.junos.junos_l3_interfaces:
-#     config:
-#       - name: "{{ item.junos_if }}"
-#         unit: "{{ item.unit }}"
-#         ipv4:
-#         - address: "{{ item.ipv4_addr }}"
-#   when: 
-#     - item.ipv4_addr is defined
-#   loop: "{{ interfaces }}"
-
-# - name: Configure interfaces - L3 IPv6
-#   junipernetworks.junos.junos_l3_interfaces:
-#     config:
-#       - name: "{{ item.junos_if }}"
-#         unit: "{{ item.unit }}"
-#         ipv6:
-#         - address: "{{ item.ipv6_addr }}"
-#   when:
-#     - item.ipv6_addr is defined
-#   loop: "{{ interfaces }}"
