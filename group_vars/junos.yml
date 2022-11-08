@@ -1,0 +1,3 @@
+---
+# junos_system role
+log_host: 10.1.3.254

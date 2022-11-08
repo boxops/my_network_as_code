@@ -1,0 +1,13 @@
+---
+- name: Configure Juniper Node
+  hosts: edge
+  connection: netconf
+  gather_facts: false
+  roles:
+    - junos_system
+    - junos_interface
+    - junos_firewall
+    - junos_routing
+    - junos_snmp
+    - junos_nat
+    - junos_aaa

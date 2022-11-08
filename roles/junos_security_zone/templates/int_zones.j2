@@ -1,5 +1,0 @@
-{% for interface in interfaces %}
-{% if interface['if_zone'] is defined %}
-set security zones security-zone {{ interface['if_zone'] }} interfaces {{ interface['junos_if'] }}.{{ interface['unit'] }}
-{% endif %}
-{% endfor %}

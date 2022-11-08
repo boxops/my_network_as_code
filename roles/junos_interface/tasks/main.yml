@@ -1,9 +1,2 @@
 ---
-- name: Merge L3 interface configuration
-  junipernetworks.junos.junos_l3_interfaces:
-    config:
-      - name: "{{ item.name }}"
-        ipv4: 
-          - address: "{{ item.ipv4_address }}"
-    state: "{{ item.state }}"
-  loop: "{{ interfaces }}"
+# tasks file for junos_interface
