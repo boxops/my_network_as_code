@@ -1,0 +1,9 @@
+delete snmp
+set snmp contact "{{ snmp['contact'] }}"
+set snmp location "{{ snmp['location'] }}"
+set snmp v3 usm local-engine user {{ snmp['user'] }} authentication-sha authentication-password {{ snmp['auth_key'] }} 
+set snmp v3 usm local-engine user {{ snmp['user'] }} privacy-aes128 privacy-password {{ snmp['priv_key'] }}
+set snmp v3 vacm security-to-group security-model usm security-name {{ snmp['user'] }} group {{ snmp['group'] }}
+set snmp v3 vacm access group {{ snmp['group'] }} default-context-prefix security-model any security-level authentication read-view all
+set snmp v3 vacm access group {{ snmp['group'] }} default-context-prefix security-model any security-level authentication write-view all
+set snmp view all oid .1
