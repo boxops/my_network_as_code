@@ -1,0 +1,32 @@
+---
+- name: Configure Prefix Lists 
+  junos_config:
+    src: prefixlists.j2
+  when:
+    - route_policies is defined
+    - route_policies.prefix_lists is defined
+  tags:
+    - bgp
+    - bgp_v4
+    - bgp_v6
+
+- name: Configure Route Policies 
+  junos_config:
+    src: policies.j2
+  when:
+    - route_policies is defined
+    - route_policies.rp is defined
+  tags:
+    - bgp
+    - bgp_v4
+    - bgp_v6
+
+- name: Configure BGP Peers
+  junos_config:
+    src: bgp_group.j2
+  when:
+    - bgp is defined
+  tags:
+    - bgp
+    - bgp_v4
+    - bgp_v6
