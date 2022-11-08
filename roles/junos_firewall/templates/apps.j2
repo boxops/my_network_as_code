@@ -1,0 +1,4 @@
+{% for app in apps %}
+set applications application {{ app['name'] }} destination-port {{ app['port'] }}
+set applications application {{ app['name'] }} protocol {{ app['proto'] }}
+{% endfor %} 
