@@ -1,0 +1,25 @@
+---
+# tasks file for routing
+#
+
+- name: OSPFv3 Interfaces
+  junos_config:
+    lines:
+      - set protocols ospf3 area {{ item.ospf.area }} interface {{ item.junos_if }}.{{ item.unit }} 
+  when: item.ospfv3 is defined
+  loop: "{{ interfaces }}"
+  tags:
+    - ospf
+    - ospf_v6
+
+- name: OSPFv3 Interfaces - Passive
+  junos_config:
+    lines:
+      - set protocols ospf3 area {{ item.ospf.area }} interface {{ item.junos_if }}.{{ item.unit }} passive
+  when: 
+    - item.ospfv3 is defined
+    - item.ospfv3.passive is defined
+  loop: "{{ interfaces }}"
+  tags:
+    - ospf
+    - ospf_v6
