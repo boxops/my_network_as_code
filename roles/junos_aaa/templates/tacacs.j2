@@ -1,0 +1,12 @@
+set system authentication-order password
+set system authentication-order tacplus
+set system tacplus-server {{ tacacs['ipv4'] }} secret {{ tacacs['secret'] }} 
+set system login class super-user-local idle-timeout 3600
+set system login class super-user-local permissions all
+set system login user remote full-name "Any remote"
+set system login user remote uid 2002
+set system login user remote class super-user-local
+set system accounting events login
+set system accounting events change-log
+set system accounting events interactive-commands
+set system accounting destination tacplus server {{ tacacs['ipv4'] }} secret {{ tacacs['secret'] }} 
