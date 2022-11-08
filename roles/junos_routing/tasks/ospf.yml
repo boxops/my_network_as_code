@@ -1,0 +1,32 @@
+---
+# tasks file for routing
+#
+- name: OSPF Process - Router ID
+  junos_config:
+    lines: 
+      - "set routing-options router-id {{ router_id }}"
+  tags:
+    - ospf
+    - ospf_v4
+
+- name: OSPF Interfaces
+  junos_config:
+    lines:
+      - set protocols ospf area {{ item.ospf.area }} interface {{ item.junos_if }}.{{ item.unit }}
+  when: item.ospf is defined
+  loop: "{{ interfaces }}"
+  tags:
+    - ospf
+    - ospf_v4
+
+- name: OSPF Interfaces - Passive
+  junos_config:
+    lines:
+      - set protocols ospf area {{ item.ospf.area }} interface {{ item.junos_if }}.{{ item.unit }} passive 
+  when: 
+    - item.ospf is defined
+    - item.ospf.passive is defined
+  loop: "{{ interfaces }}"
+  tags:
+    - ospf
+    - ospf_v4
