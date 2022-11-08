@@ -1,18 +1,18 @@
 ---
 # tasks file for junos_system
 - name: Set hostname
-  junos_system:
+  junipernetworks.junos.junos_system:
     hostname: "{{ inventory_hostname }}"
 
 - name: Remove unneeded banners
-  junos_banner:
+  junipernetworks.junos.junos_banner:
     banner: "{{ item }}"
     state: absent
   loop:
   - motd
 
 - name: Update login banner
-  junos_banner:
+  junipernetworks.junos.junos_banner:
     banner: login
     text: |
       ----------------------------------------
@@ -23,7 +23,7 @@
     state: present
 
 - name: Configure syslog
-  junos_logging:
+  junipernetworks.junos.junos_logging:
     dest: host
     name: "{{ log_host }}"
     level: info

@@ -2,7 +2,7 @@
 # tasks file for routing
 #
 - name: OSPF Process - Router ID
-  junos_config:
+  junipernetworks.junos.junos_config:
     lines: 
       - "set routing-options router-id {{ router_id }}"
   tags:
@@ -10,7 +10,7 @@
     - ospf_v4
 
 - name: OSPF Interfaces
-  junos_config:
+  junipernetworks.junos.junos_config:
     lines:
       - set protocols ospf area {{ item.ospf.area }} interface {{ item.junos_if }}.{{ item.unit }}
   when: item.ospf is defined
@@ -20,7 +20,7 @@
     - ospf_v4
 
 - name: OSPF Interfaces - Passive
-  junos_config:
+  junipernetworks.junos.junos_config:
     lines:
       - set protocols ospf area {{ item.ospf.area }} interface {{ item.junos_if }}.{{ item.unit }} passive 
   when: 

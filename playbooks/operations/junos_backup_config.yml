@@ -1,6 +1,6 @@
 ---
 - name: "Get Junos OS configuration"
-  hosts: edge_r1
+  hosts: edge_srx_r1
   connection: local
   gather_facts: no
 
@@ -8,5 +8,5 @@
     - name: "Save configuration to a file"
       juniper.device.config:
         retrieve: "committed"
-        format: "text"
-        dest_dir: "../backups"
+        format: "set"
+        save_dir: "../../backups"

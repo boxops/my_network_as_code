@@ -1,5 +1,5 @@
 ---
-ansible_connection: netconf 
+ansible_connection: netconf
 ansible_network_os: junipernetworks.junos.junos
 
 log_host: 10.100.102.254
@@ -13,3 +13,5 @@ snmp:
   contact: Ansible
   user: ansible
   group: ansible_group
+  auth_key: auth_key
+  priv_key: priv_key

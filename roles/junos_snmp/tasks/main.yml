@@ -1,7 +1,7 @@
 ---
 # tasks file for junos_snmp
 - name: Enable SNMPv3
-  junos_config:
+  junipernetworks.junos.junos_config:
     src: snmpv3.j2
   tags:
     - snmp

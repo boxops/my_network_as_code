@@ -34,12 +34,12 @@ echo "New SSH key filename:"
 echo "Press enter for [$DEFAULTSSHFILENAME]"
 read SSHFILENAME
 
-DEFAULTREMOTEUSERNAME="admin"
+DEFAULTREMOTEUSERNAME="ansible"
 echo "Remote host username:"
 echo "Press enter for [$DEFAULTREMOTEUSERNAME]"
 read REMOTEUSERNAME
 
-DEFAULTREMOTEFILEPATH="/var/home/admin/"
+DEFAULTREMOTEFILEPATH="/var/home/ansible/"
 echo "Remote host absolute filepath:"
 echo "Press enter for [$DEFAULTREMOTEFILEPATH]"
 read REMOTEFILEPATH

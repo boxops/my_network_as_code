@@ -1,7 +1,7 @@
 ---
 # tasks file for junos_nat
 - name: Apply NAT Overload
-  junos_config:
+  junipernetworks.junos.junos_config:
     src: nat-overload.j2
   tags:
   - nat
