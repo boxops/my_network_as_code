@@ -8,7 +8,8 @@ A configuration management program that defines a network infrastructure in code
 Setup
 -----
 
-Tested on Ubuntu 22.04 LTS operating system.
+The Ansible control node was developed and tested on Ubuntu 22.04 LTS operating system.
+
 ```bash
 $ git clone https://github.com/boxops/my_network_as_code.git
 $ cd my_network_as_code
@@ -20,30 +21,31 @@ $ python3 -m pip install -r requirements.txt
 Variables
 ---------
 
-Make sure to use your own unique variables in ```vars/all.yml```, ```ansible.cfg```, and ```[staging|production]_inventory.ini``` files.
+Before running playbooks, make sure to add your own unique variables in folders: ```group_vars```, ```host_vars```
+
+and files: ```ansible.cfg```, ```staging_inventory.yml```, ```production_inventory.yml```.
 
 Testing
 -------
 
 Lint playbooks, roles and collections:
 ```bash
-$ ansible-lint main.yml
+$ ansible-lint deploy.yml
 ```
 
 Validation
 ----------
 
-Deploy and validate Ansible tasks using Vagrant that starts a VM and runs the provisioning playbook:
-```bash
-$ vagrant up
-```
+Work in progress...
+
+TODO: Verify and test functionality using Ansible roles for Batfish (https://github.com/batfish/ansible)
 
 Production Deployment
 ---------------------
 
-Run the main playbook with the inventory file that defines production nodes:
+Run the ```deploy.yml``` playbook with the inventory file that defines production nodes:
 ```bash
-$ ansible-playbook -i production_inventory.ini main.yml
+$ ansible-playbook -i production_inventory.yml deploy.yml
 ```
 
 License
