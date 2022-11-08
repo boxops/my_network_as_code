@@ -1,6 +1,6 @@
 ---
 - name: "Get Junos OS configuration"
-  hosts: edge_srx_r1
+  hosts: edge
   connection: local
   gather_facts: no
 
