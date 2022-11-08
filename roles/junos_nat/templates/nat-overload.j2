@@ -1,0 +1,16 @@
+{% if 'edge' in rtr_role %}
+delete security nat
+{% for zone in zones %}
+{% if zone['nat'] is defined %}
+set security nat source rule-set internet-nat description "Internet-facing NAT"
+{% if 'inside' in zone['nat']['role'] %}
+set security nat source rule-set internet-nat from zone {{ zone['name'] }}
+{% endif %}
+{% if 'outside' in zone['nat']['role'] %}
+set security nat source rule-set internet-nat to zone {{ zone['name'] }}
+{% endif %}
+{% endif %}
+{% endfor %}
+set security nat source rule-set internet-nat rule snat-out match destination-address 0.0.0.0/0
+set security nat source rule-set internet-nat rule snat-out then source-nat interface
+{% endif %}
