@@ -1,0 +1,15 @@
+{% for address in addressbook %}
+{% if 'global' in address['zone'] %}
+set security address-book global address {{ address['name'] }} {{ address['ip'] }}
+{% if address['set'] is defined %}
+set security address-book global address-set {{ address['set'] }} address {{ address['name'] }} 
+{% endif %}
+{% else %}
+set security address-book {{ address['zone'] }} address {{ address['name'] }} {{ address['ip'] }}
+{% if address['set'] is defined %}
+{% for addr_set in address['set'] %}
+set security address-book {{ address['zone'] }} address-set {{ addr_set }} address {{ address['name'] }}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% endfor %}
