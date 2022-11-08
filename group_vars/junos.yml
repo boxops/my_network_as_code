@@ -1,6 +1,6 @@
 ---
 ansible_connection: netconf 
-ansible_network_os: junos
+ansible_network_os: junipernetworks.junos.junos
 
 log_host: 10.100.102.254
 
