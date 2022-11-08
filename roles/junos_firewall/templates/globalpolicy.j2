@@ -1,0 +1,27 @@
+{% for policy in fw_policies %}
+{% if 'global' in policy['zone'] %}
+delete security policies global policy {{ policy['name'] }}
+{% if 'any' in policy['source'] %}
+set security policies global policy {{ policy['name'] }}  match source-address any
+{% else %}
+{% for s_addr in policy['source'] %}
+set security policies global policy {{ policy['name'] }}  match source-address {{ s_addr }}
+{% endfor %}
+{% endif %}
+{% if 'any' in policy['destination'] %}
+set security policies global policy {{ policy['name'] }}  match destination-address any
+{% else %}
+{% for d_addr in policy['destination'] %}
+set security policies global policy {{ policy['name'] }}  match destination-address {{ d_addr }}
+{% endfor %}
+{% endif %}
+{% if 'any' in policy['apps'] %}
+set security policies global policy {{ policy['name'] }} match application any 
+{% else %}
+{% for app in policy['apps'] %}
+set security policies global policy {{ policy['name'] }} match application {{ app }}
+{% endfor %}
+{% endif %}
+set security policies global policy {{ policy['name'] }} then {{ policy['action'] }}
+{% endif %}
+{% endfor %}
