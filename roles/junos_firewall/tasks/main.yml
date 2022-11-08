@@ -1,2 +1,60 @@
 ---
 # tasks file for junos_firewall
+- name: Remove default firewall config
+  junos_config:
+    lines:
+      - delete security zones security-zone trust
+      - delete security zones security-zone untrust
+      - delete security screen ids-option untrust-screen
+      - delete security policies from-zone trust to-zone trust policy default-permit
+      - delete security policies from-zone trust to-zone untrust policy default-permit
+  tags:
+    - firewall
+
+- name: Define Firewall Zones
+  junos_config:
+    src: zones.j2
+  when:
+    - zones is defined
+  tags:
+    - firewall
+
+- name: Add interfaces to zones
+  junos_config:
+    src: int_zones.j2
+  tags:
+    - firewall
+
+- name: Define Addresses
+  junos_config:
+    src: addressbook.j2
+  when:
+    - addressbook is defined
+  tags:
+    - firewall
+
+- name: Define Applications
+  junos_config:
+    src: apps.j2
+  when:
+    - apps is defined
+  tags:
+    - firewall
+
+- name: Define Global Policies
+  junos_config:
+    src: globalpolicy.j2
+    update: replace
+  when:
+    - fw_policies is defined
+  tags:
+    - firewall
+
+- name: Define Zone Policies
+  junos_config:
+    src: policy.j2
+    update: replace
+  when:
+    - fw_policies is defined
+  tags:
+    - firewall
