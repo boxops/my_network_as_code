@@ -1,0 +1,33 @@
+---
+- name: Extract network device facts using Batfish and Ansible
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  roles:
+    - batfish.base
+
+  tasks:
+
+  - name: Setup connection to Batfish service
+    bf_session:
+      host: localhost
+      name: local_batfish
+
+  - name: Initialize the example network
+    bf_init_snapshot:
+      network: example_network
+      snapshot: example_snapshot
+      snapshot_data: ../../batfish
+      overwrite: true
+
+  - name: Retrieve Batfish Facts
+    bf_extract_facts:
+      output_directory: batfish_facts
+    register: bf_facts
+
+  - name: Display configuration for all interfaces on all nodes
+    ansible.builtin.debug: msg="{{ item.value.Interfaces }}"
+    with_dict: "{{ bf_facts.result.nodes }}"
+    loop_control:
+      label: "{{ item.key }}.Interfaces"
+    when: not bf_facts.failed | bool

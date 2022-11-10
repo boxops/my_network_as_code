@@ -8,5 +8,5 @@
     - name: "Save configuration to a file"
       juniper.device.config:
         retrieve: "committed"
-        format: "set"
-        save_dir: "../../backups"
+        format: "text"
+        save_dir: "../../batfish/configs"
