@@ -43,6 +43,7 @@ file_exists = os.path.exists(key_path)
 
 if file_exists is False:
     subprocess.run(["ssh-keygen", "-t", "rsa", "-b", "4096", "-N", '', "-f", f"{key_path}"], stdout=subprocess.DEVNULL)
+    subprocess.check_output(["ssh-agent", "-s"])
     subprocess.run(["ssh-add", f"{key_path}"])
 else:
     print("Key exists.")
