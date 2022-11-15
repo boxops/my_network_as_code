@@ -51,9 +51,9 @@ $ python3 run_batfish_query.py
 Production Deployment
 ---------------------
 
-Run the ```deploy.yml``` playbook with the inventory file that defines production nodes:
+Run the ```deploy_network.yml``` playbook with the inventory file that defines production nodes:
 ```bash
-$ ansible-playbook -i production_inventory.yml deploy.yml
+$ ansible-playbook -i production_inventory.yml deploy_network.yml
 ```
 
 License
