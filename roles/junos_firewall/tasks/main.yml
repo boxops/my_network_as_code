@@ -2,94 +2,60 @@
 # tasks file for junos_firewall
 
 - name: Remove default firewall config
-  # junipernetworks.junos.junos_config:
-  #   lines:
-  #     - delete security zones security-zone trust
-  #     - delete security zones security-zone untrust
-  #     - delete security screen ids-option untrust-screen
-  #     - delete security policies from-zone trust to-zone trust policy default-permit
-  #     - delete security policies from-zone trust to-zone untrust policy default-permit
-  # tags:
-  #   - firewall
-  ansible.builtin.blockinfile:
-    block: "{{ lookup('template', 'remove_default.j2') }}"
-    dest: "{{ base_dir }}/builds/{{ inventory_hostname }}.conf"
-    marker: "# roles/junos_interface/remove default firewall config"
+  junipernetworks.junos.junos_config:
+    lines:
+      - delete security zones security-zone trust
+      - delete security zones security-zone untrust
+      - delete security screen ids-option untrust-screen
+      - delete security policies from-zone trust to-zone trust policy default-permit
+      - delete security policies from-zone trust to-zone untrust policy default-permit
+  tags:
+    - firewall
 
 - name: Define firewall zones
-#   junipernetworks.junos.junos_config:
-#     src: zones.j2
-#   when:
-#     - zones is defined
-#   tags:
-#     - firewall
-  ansible.builtin.blockinfile:
-    block: "{{ lookup('template', 'zones.j2') }}"
-    dest: "{{ base_dir }}/builds/{{ inventory_hostname }}.conf"
-    marker: "# roles/junos_interface/define firewall zones"
-  when: zones is defined
+  junipernetworks.junos.junos_config:
+    src: zones.j2
+  when:
+    - zones is defined
+  tags:
+    - firewall
 
 - name: Add interfaces to zones
-#   junipernetworks.junos.junos_config:
-#     src: int_zones.j2
-#   tags:
-#     - firewall
-  ansible.builtin.blockinfile:
-    block: "{{ lookup('template', 'int_zones.j2') }}"
-    dest: "{{ base_dir }}/builds/{{ inventory_hostname }}.conf"
-    marker: "# roles/junos_interface/add interfaces to zones"
-  when: zones is defined
+  junipernetworks.junos.junos_config:
+    src: int_zones.j2
+  tags:
+    - firewall
 
 - name: Define addressbook
-#   junipernetworks.junos.junos_config:
-#     src: addressbook.j2
-#   when:
-#     - addressbook is defined
-#   tags:
-#     - firewall
-  ansible.builtin.blockinfile:
-    block: "{{ lookup('template', 'addressbook.j2') }}"
-    dest: "{{ base_dir }}/builds/{{ inventory_hostname }}.conf"
-    marker: "# roles/junos_interface/define addressbook"
-  when: addressbook is defined
+  junipernetworks.junos.junos_config:
+    src: addressbook.j2
+  when:
+    - addressbook is defined
+  tags:
+    - firewall
 
 - name: Define applications
-#   junipernetworks.junos.junos_config:
-#     src: apps.j2
-#   when:
-#     - apps is defined
-#   tags:
-#     - firewall
-  ansible.builtin.blockinfile:
-    block: "{{ lookup('template', 'apps.j2') }}"
-    dest: "{{ base_dir }}/builds/{{ inventory_hostname }}.conf"
-    marker: "# roles/junos_interface/define applications"
-  when: apps is defined
+  junipernetworks.junos.junos_config:
+    src: apps.j2
+  when:
+    - apps is defined
+  tags:
+    - firewall
 
 - name: Define Global Policies
-#   junipernetworks.junos.junos_config:
-#     src: globalpolicy.j2
-#     update: replace
-#   when:
-#     - fw_policies is defined
-#   tags:
-#     - firewall
-  ansible.builtin.blockinfile:
-    block: "{{ lookup('template', 'globalpolicy.j2') }}"
-    dest: "{{ base_dir }}/builds/{{ inventory_hostname }}.conf"
-    marker: "# roles/junos_interface/define global policies"
-  when: fw_policies is defined
+  junipernetworks.junos.junos_config:
+    src: globalpolicy.j2
+    update: replace
+  when:
+    - fw_policies is defined
+  tags:
+    - firewall
 
 - name: Define Zone Policies
-#   junipernetworks.junos.junos_config:
-#     src: policy.j2
-#     update: replace
-#   when:
-#     - fw_policies is defined
-#   tags:
-#     - firewall
-  ansible.builtin.blockinfile:
-    block: "{{ lookup('template', 'policy.j2') }}"
-    dest: "{{ base_dir }}/builds/{{ inventory_hostname }}.conf"
-    marker: "# roles/junos_interface/define zone policies"
-  when: fw_policies is defined
+  junipernetworks.junos.junos_config:
+    src: policy.j2
+    update: replace
+  when:
+    - fw_policies is defined
+  tags:
+    - firewall

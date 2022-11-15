@@ -2,21 +2,13 @@
 # tasks file for junos_system
 
 - name: Set hostname
-  # junipernetworks.junos.junos_system:
-  #   hostname: "{{ inventory_hostname }}"
-  ansible.builtin.blockinfile:
-    block: "{{ lookup('template', 'hostname.j2') }}"
-    dest: "{{ base_dir }}/builds/{{ inventory_hostname }}.conf"
-    marker: "# roles/junos_system/set hostname"
+  junipernetworks.junos.junos_system:
+    hostname: "{{ inventory_hostname }}"
 
 - name: Configure syslog
-  # junipernetworks.junos.junos_logging:
-  #   dest: host
-  #   name: "{{ syslog_host }}"
-  #   level: info
-  #   facility: any
-  #   state: present
-  ansible.builtin.blockinfile:
-    block: "{{ lookup('template', 'syslog.j2') }}"
-    dest: "{{ base_dir }}/builds/{{ inventory_hostname }}.conf"
-    marker: "# roles/junos_system/configure syslog"
+  junipernetworks.junos.junos_logging:
+    dest: host
+    name: "{{ syslog_host }}"
+    level: info
+    facility: any
+    state: present

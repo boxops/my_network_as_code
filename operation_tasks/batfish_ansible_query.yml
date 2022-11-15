@@ -17,7 +17,7 @@
     bf_init_snapshot:
       network: example_network
       snapshot: example_snapshot
-      snapshot_data: ../../batfish
+      snapshot_data: ../builds
       overwrite: true
 
   - name: Retrieve Batfish Facts

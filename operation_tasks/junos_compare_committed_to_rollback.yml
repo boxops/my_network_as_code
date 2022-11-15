@@ -17,7 +17,7 @@
         check: false
         commit: false
         # Save diffs to a file:
-        diffs_file: "../diffs/{{ inventory_hostname }}-diff-rollback-{{ ROLLBACK }}"
+        # diffs_file: "../diffs/{{ inventory_hostname }}-diff-rollback-{{ ROLLBACK }}"
       register: diff
     - name: "Print diff"
       ansible.builtin.debug:

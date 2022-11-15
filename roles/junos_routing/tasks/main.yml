@@ -1,37 +1,7 @@
 ---
-# - name: Tasks for junos_routing
-#   ansible.builtin.include_tasks: "{{ item }}"
-#   loop:
-#     - ospf.yml
-#     - ospfv3.yml
-#     - bgp.yml
-
-- name: OSPF configuration
-  ansible.builtin.blockinfile:
-    block: "{{ lookup('template', 'ospf.j2') }}"
-    dest: "{{ base_dir }}/builds/{{ inventory_hostname }}.conf"
-    marker: "# roles/junos_interface/ospf configuration"
-
-- name: OSPFv3 configuration
-  ansible.builtin.blockinfile:
-    block: "{{ lookup('template', 'ospfv3.j2') }}"
-    dest: "{{ base_dir }}/builds/{{ inventory_hostname }}.conf"
-    marker: "# roles/junos_interface/ospfv3 configuration"
-
-- name: BGP prefix list
-  ansible.builtin.blockinfile:
-    block: "{{ lookup('template', 'prefixlists.j2') }}"
-    dest: "{{ base_dir }}/builds/{{ inventory_hostname }}.conf"
-    marker: "# roles/junos_interface/bgp prefix list"
-
-- name: BGP route policies
-  ansible.builtin.blockinfile:
-    block: "{{ lookup('template', 'policies.j2') }}"
-    dest: "{{ base_dir }}/builds/{{ inventory_hostname }}.conf"
-    marker: "# roles/junos_interface/bgp route policies"
-
-- name: BGP peers
-  ansible.builtin.blockinfile:
-    block: "{{ lookup('template', 'bgp_group.j2') }}"
-    dest: "{{ base_dir }}/builds/{{ inventory_hostname }}.conf"
-    marker: "# roles/junos_interface/bgp peers"
+- name: Tasks for junos_routing
+  ansible.builtin.include_tasks: "{{ item }}"
+  loop:
+    - ospf.yml
+    - ospfv3.yml
+    - bgp.yml
