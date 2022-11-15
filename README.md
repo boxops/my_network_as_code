@@ -10,11 +10,18 @@ Setup
 
 The Ansible control node was developed and tested on Ubuntu 22.04 LTS operating system.
 
+Clone the repository:
 ```bash
 $ git clone https://github.com/boxops/my_network_as_code.git
+```
+Create a virtual environment:
+```bash
 $ cd my_network_as_code
 $ python3 -m venv venv
 $ source venv/bin/activate
+```
+Install required Python libraries:
+```bash
 $ python3 -m pip install -r requirements.txt
 ```
 
@@ -23,7 +30,7 @@ Variables
 
 Before running playbooks, make sure to add your own unique variables in folders: ```group_vars```, ```host_vars```
 
-and files: ```ansible.cfg```, ```staging_inventory.yml```, ```production_inventory.yml```.
+and files: ```staging_inventory.yml```, ```production_inventory.yml```.
 
 Testing
 -------
@@ -36,9 +43,10 @@ $ ansible-lint deploy.yml
 Validation
 ----------
 
-Work in progress...
-
-TODO: Verify and test functionality using Ansible roles for Batfish (https://github.com/batfish/ansible)
+Verify and test functionality using the Batfish interactive Python script:
+```bash
+$ python3 run_batfish_query.py
+```
 
 Production Deployment
 ---------------------
