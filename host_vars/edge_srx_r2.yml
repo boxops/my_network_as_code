@@ -1,5 +1,47 @@
 router_id: 192.0.2.202
 rtr_role: internal
+
+interfaces:
+  - name: "fxp0"
+    unit: 0
+    desc: "Management"
+    enabled: "true"
+    ipv4_addr: "10.15.30.34/24"
+  
+  - name: "ge-0/0/0"
+    unit: 0
+    desc: "VLAN Bridge"
+    enabled: "true"
+    subint:
+      vlans:
+      - 202
+  
+  - name: "ge-0/0/0"
+    unit: 202
+    desc: "To junos-01"
+    enabled: "true"
+    ipv4_addr: "10.100.202.253/24"
+    ipv6_addr: "2001:db8:202::f/64"
+    if_zone: "internal"
+    ospf:
+      area: "0.0.0.0"
+    ospfv3:
+      area: "0.0.0.0"
+  
+  - name: "lo0"
+    unit: 0
+    desc: "Loopback"
+    enabled: "true"
+    if_zone: "internal"
+    ipv4_addr: "192.0.2.202/32"
+    ipv6_addr: "2001:db8:902:beef::2/128"
+    ospf:
+      area: "0.0.0.0"
+      passive: true
+    ospfv3:
+      area: "0.0.0.0"
+      passive: true
+
 addressbook:
   - zone: internal
     name: edge-rtr
@@ -7,12 +49,14 @@ addressbook:
     set: 
     - internal_bgp_peers
     - internal-rtr-loop
+
   - zone: internal
     name: edge-rtr-v6
     ip: "2001:db8:902:beef::1/128"
     set: 
     - internal_bgp_peers
     - internal-rtr-loop
+
 fw_policies:
   - name: all_icmp
     zone: global
@@ -21,6 +65,7 @@ fw_policies:
     action: permit
     apps:
       - junos-ping
+
   - name: a_int_bgp
     zone: internal
     from_zone: internal
@@ -31,6 +76,7 @@ fw_policies:
     action: permit
     apps:
       - junos-bgp
+
   - name: a_int_bgp_host
     zone: internal
     from_zone: internal
@@ -41,6 +87,7 @@ fw_policies:
     action: permit
     apps:
       - junos-bgp
+
 route_policies:
   prefix_lists:
     - name: external_nets
@@ -48,6 +95,7 @@ route_policies:
          - 192.0.2.1/32
          - "2001:db8:999:beef::1/128"
          - 10.100.102.0/24
+
     - name: internal_nets
       addresses:
          - 192.0.2.102/32
@@ -56,9 +104,11 @@ route_policies:
          - "2001:db8:902:beef::1/128"
          - "2001:db8:902:beef::2/128"
          - "2001:db8:902::/64"
+
     - name: default_route
       addresses:
         - 0.0.0.0/0
+
   rp:
     - name: external_networks
       from:
@@ -66,20 +116,24 @@ route_policies:
         - bgp
         pfx_list: external_nets
       action: accept
+
     - name: internal_networks
       from:
         protocols:
         - bgp
         pfx_list: internal_nets
       action: accept
+
     - name: default_route
       from:
         protocols: 
         - bgp 
         pfx_list: default_route
       action: accept
+
     - name: deny-all 
       action: reject
+
 bgp:
   local_as: 65102
   groups:
@@ -103,6 +157,7 @@ bgp:
         - peer: "2001:db8:902:beef::1"
           loc_ip: "2001:db8:902:beef::2"
           desc: "junos-02 IPv6"
+
 zones:
   - name: "internal"
     host_traffic:
@@ -113,40 +168,3 @@ zones:
       services:
         - ping
         - traceroute
-interfaces:
-  - junos_if: "fxp0"
-    unit: 0
-    desc: "Management"
-    enabled: "true"
-    ipv4_addr: "10.15.30.34/24"
-  - junos_if: "ge-0/0/0"
-    unit: 0
-    desc: "VLAN Bridge"
-    enabled: "true"
-    subint:
-      vlans:
-      - 202
-  - junos_if: "ge-0/0/0"
-    unit: 202
-    desc: "To junos-01"
-    enabled: "true"
-    ipv4_addr: "10.100.202.253/24"
-    ipv6_addr: "2001:db8:202::f/64"
-    if_zone: "internal"
-    ospf:
-      area: "0.0.0.0"
-    ospfv3:
-      area: "0.0.0.0"
-  - junos_if: "lo0"
-    unit: 0
-    desc: "Loopback"
-    enabled: "true"
-    if_zone: "internal"
-    ipv4_addr: "192.0.2.202/32"
-    ipv6_addr: "2001:db8:902:beef::2/128"
-    ospf:
-      area: "0.0.0.0"
-      passive: true
-    ospfv3:
-      area: "0.0.0.0"
-      passive: true

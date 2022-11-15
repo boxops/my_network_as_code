@@ -1,42 +1,50 @@
 ---
 # tasks file for junos_interface
-- name: Configure subinterfaces first
-  junipernetworks.junos.junos_config:
-    src: subints.j2
-    src_format: set
 
-- name: Configure interfaces - Status and Descriptions
-  junipernetworks.junos.junos_interfaces:
-    config:
-      - name: "{{ item.junos_if }}"
-        description: "{{ item.desc }}"
-        enabled: "{{ item.enabled }}"
-  when: item.unit == 0
-  loop: "{{ interfaces }}"
+- name: Configure subinterfaces
+  # junipernetworks.junos.junos_config:
+  #   src: subinterfaces.j2
+  #   src_format: set
+  ansible.builtin.blockinfile:
+    block: "{{ lookup('template', 'subinterfaces.j2') }}"
+    dest: "{{ base_dir }}/builds/{{ inventory_hostname }}.conf"
+    marker: "# roles/junos_interface/configure subinterfaces"
 
-# - name: Configure subinterfaces - Descriptions
-#   junipernetworks.junos.junos_config:
-#     src: descs.j2
-#     src_format: set
+- name: Configure interface status and descriptions
+  # junipernetworks.junos.junos_interfaces:
+  #   config:
+  #     - name: "{{ item.name }}"
+  #       description: "{{ item.desc }}"
+  #       enabled: "{{ item.enabled }}"
+  # when: item.unit == 0
+  # loop: "{{ interfaces }}"
+  ansible.builtin.blockinfile:
+    block: "{{ lookup('template', 'descriptions.j2') }}"
+    dest: "{{ base_dir }}/builds/{{ inventory_hostname }}.conf"
+    marker: "# roles/junos_interface/configure interface status and descriptions"
 
-- name: Configure interfaces - L3 IPv4
-  junipernetworks.junos.junos_l3_interfaces:
-    config:
-      - name: "{{ item.junos_if }}"
-        unit: "{{ item.unit }}"
-        ipv4:
-        - address: "{{ item.ipv4_addr }}"
-  when: 
-    - item.ipv4_addr is defined
-  loop: "{{ interfaces }}"
+- name: Configure Layer 3 interfaces
+  # junipernetworks.junos.junos_l3_interfaces:
+  #   config:
+  #     - name: "{{ item.name }}"
+  #       unit: "{{ item.unit }}"
+  #       ipv4:
+  #       - address: "{{ item.ipv4_addr }}"
+  # when: 
+  #   - item.ipv4_addr is defined
+  # loop: "{{ interfaces }}"
+  ansible.builtin.blockinfile:
+    block: "{{ lookup('template', 'l3_interfaces.j2') }}"
+    dest: "{{ base_dir }}/builds/{{ inventory_hostname }}.conf"
+    marker: "# roles/junos_interface/configure layer 3 interfaces"
 
-- name: Configure interfaces - L3 IPv6
-  junipernetworks.junos.junos_l3_interfaces:
-    config:
-      - name: "{{ item.junos_if }}"
-        unit: "{{ item.unit }}"
-        ipv6:
-        - address: "{{ item.ipv6_addr }}"
-  when:
-    - item.ipv6_addr is defined
-  loop: "{{ interfaces }}"
+# - name: Configure Layer 3 IPv6 interfaces
+#   junipernetworks.junos.junos_l3_interfaces:
+#     config:
+#       - name: "{{ item.name }}"
+#         unit: "{{ item.unit }}"
+#         ipv6:
+#         - address: "{{ item.ipv6_addr }}"
+#   when:
+#     - item.ipv6_addr is defined
+#   loop: "{{ interfaces }}"

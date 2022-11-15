@@ -1,0 +1,9 @@
+set routing-options router-id {{ router_id }}
+{% for interface in interfaces %}
+{% if interface['ospf'] is defined and interface['enabled'] %}
+set protocols ospf area {{ interface['ospf']['area'] }} interface {{ interface['name'] }}.{{ interface['unit'] }}
+{% endif %}
+{% if interface['ospf'] is defined and interface['ospf']['passive'] is defined and interface['ospf']['passive'] %}
+set protocols ospf area {{ interface['ospf']['area'] }} interface {{ interface['name'] }}.{{ interface['unit'] }} passive
+{% endif %}
+{% endfor %}

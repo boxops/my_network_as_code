@@ -2,7 +2,7 @@
 ansible_connection: netconf
 ansible_network_os: junipernetworks.junos.junos
 
-log_host: 10.100.102.254
+syslog_host: 10.100.102.254
 
 tacacs:
   ipv4: 192.0.2.1

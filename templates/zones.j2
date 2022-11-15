@@ -1,0 +1,16 @@
+{% for zone in zones %}
+set security zones security-zone {{ zone['name'] }}
+set security address-book {{ zone['name'] }} attach zone {{ zone['name'] }}
+{% if zone['host_traffic'] is defined %}
+{% if zone['host_traffic']['protocols'] is defined %}
+{% for protocol in zone['host_traffic']['protocols'] %}
+set security zones security-zone {{ zone['name'] }} host-inbound-traffic protocols {{ protocol }} 
+{% endfor %}
+{% endif %}
+{% if zone['host_traffic']['services'] is defined %}
+{% for service in zone['host_traffic']['services'] %}
+set security zones security-zone {{ zone['name'] }} host-inbound-traffic system-services {{ service }} 
+{% endfor %}
+{% endif %}
+{% endif %}
+{% endfor %}

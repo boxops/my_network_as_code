@@ -1,5 +1,72 @@
 router_id: 192.0.2.102
 rtr_role: edge
+
+interfaces:
+  - name: "fxp0"
+    unit: 0
+    desc: "Management"
+    enabled: true
+    ipv4_addr: "192.168.81.10/24"
+
+  - name: "ge-0/0/0"
+    unit: 0
+    desc: "VLAN Bridge"
+    enabled: true
+    subint:
+      vlans:
+      - 102
+      - 202
+  
+  - name: "ge-0/0/0"
+    unit: 102
+    desc: "To netsvr"
+    enabled: true
+    zone: "edge"
+    ipv4_addr: "10.100.102.253/24"
+    ipv6_addr: "2001:db8:102::f/64"
+    ospf:
+      area: "0.0.0.0"
+      passive: true
+    ospfv3:
+      area: "0.0.0.0"
+      passive: true
+  
+  - name: "ge-0/0/0"
+    unit: 202
+    desc: "To junos-02"
+    enabled: true
+    ipv4_addr: "10.100.202.254/24"
+    ipv6_addr: "2001:db8:202::a/64"
+    zone: "internal"
+    ospf:
+      area: "0.0.0.0"
+    ospfv3:
+      area: "0.0.0.0"
+  
+  - name: "ge-0/0/1"
+    desc: "To the Internet"
+    unit: 0
+    enabled: true
+    ipv4_addr: "dhcp"
+    zone: "internet"
+    ospf:
+      area: "0.0.0.0"
+      passive: true
+  
+  - name: "lo0"
+    unit: 0
+    desc: "Loopback"
+    enabled: true
+    zone: "internal"
+    ipv4_addr: "192.0.2.102/32"
+    ipv6_addr: "2001:db8:902:beef::1/128"
+    ospf:
+      area: "0.0.0.0"
+      passive: true
+    ospfv3:
+      area: "0.0.0.0"
+      passive: true
+
 addressbook:
   - zone: edge
     name: netsvr
@@ -7,34 +74,40 @@ addressbook:
     set:
       - external_bgp_peers
       - netsvr-direct
+
   - zone: edge
     name: netsvr-v6
     ip: "2001:db8:102::ffff/128"
     set:
       - external_bgp_peers
       - netsvr-direct
+
   - zone: edge
     name: netsvr-lo
     ip: 192.0.2.1
     set:
     - netsvr-loop
+
   - zone: edge
     name: netsvr-lo-v6
     ip: "2001:db8:999:beef::1/128"
     set: 
     - netsvr-loop
+
   - zone: internal
     name: internal-rtr
     ip: 192.0.2.202
     set: 
     - internal_bgp_peers
     - internal-rtr-loop
+
   - zone: internal
     name: internal-rtr-v6
     ip: "2001:db8:902:beef::2/128"
     set: 
     - internal_bgp_peers
     - internal-rtr-loop
+
 fw_policies:
   - name: all_icmp
     zone: global
@@ -43,6 +116,7 @@ fw_policies:
     action: permit
     apps:
       - junos-ping
+
   - name: a_tacacs
     zone: internal
     from_zone: internal
@@ -53,6 +127,7 @@ fw_policies:
     action: permit
     apps:
       - junos-tacacs
+
   - name: a_syslog
     zone: internal
     from_zone: internal
@@ -63,6 +138,7 @@ fw_policies:
     action: permit
     apps:
       - junos-syslog
+
   - name: a_ext_bgp
     zone: edge
     from_zone: edge
@@ -73,6 +149,7 @@ fw_policies:
     action: permit
     apps:
       - junos-bgp
+
   - name: a_ext_bgp_host
     zone: edge
     from_zone: edge
@@ -83,6 +160,7 @@ fw_policies:
     action: permit
     apps:
       - junos-bgp
+
   - name: a_int_bgp
     zone: internal
     from_zone: internal
@@ -93,6 +171,7 @@ fw_policies:
     action: permit
     apps:
       - junos-bgp
+
   - name: a_int_bgp_host
     zone: internal
     from_zone: internal
@@ -103,6 +182,7 @@ fw_policies:
     action: permit
     apps:
       - junos-bgp
+
   - name: a_internet_routing
     zone: internal
     from_zone: internal
@@ -111,6 +191,7 @@ fw_policies:
     destination: any
     action: permit
     apps: any
+
 route_policies:
   prefix_lists:
     - name: internal_nets
@@ -121,11 +202,13 @@ route_policies:
          - "2001:db8:902:beef::1/128"
          - "2001:db8:902:beef::2/128"
          - "2001:db8:902::/64"
+
     - name: external_nets
       addresses:
          - 192.0.2.1/32
          - "2001:db8:999:beef::1/128"
          - 10.100.102.0/24
+
   rp:
     - name: external_networks
       from:
@@ -133,6 +216,7 @@ route_policies:
         - bgp
         pfx_list: external_nets
       action: accept
+
     - name: internal_networks
       from:
         protocols:
@@ -141,13 +225,16 @@ route_policies:
         - ospf3
         pfx_list: internal_nets
       action: accept
+
     - name: dhcp_default
       from:
         protocols: 
         - access-internal
       action: accept
+
     - name: deny-all 
       action: reject
+
 bgp:
   local_as: 65102
   groups:
@@ -169,6 +256,7 @@ bgp:
         - peer: "2001:db8:102::ffff"
           remote_as: 65430
           desc: "netsvr-01 IPv6"
+
     - name: IBGP
       type: internal
       desc: "IBGP BGP Peering"
@@ -189,6 +277,7 @@ bgp:
         - peer: "2001:db8:902:beef::2"
           loc_ip: "2001:db8:902:beef::1"
           desc: "junos-02 IPv6"
+
 zones:
   - name: "edge"
     host_traffic:
@@ -197,6 +286,7 @@ zones:
       services:
         - ping
         - traceroute
+
   - name: "internet"
     nat: 
       role: "outside"
@@ -205,6 +295,7 @@ zones:
         - ping
         - traceroute
         - dhcp
+
   - name: "internal"
     nat:
       role: "inside"
@@ -216,63 +307,3 @@ zones:
       services:
         - ping
         - traceroute
-interfaces:
-  - junos_if: "fxp0"
-    unit: 0
-    desc: "Management"
-    enabled: "true"
-    ipv4_addr: "10.15.30.33/24"
-  - junos_if: "ge-0/0/0"
-    unit: 0
-    desc: "VLAN Bridge"
-    enabled: "true"
-    subint:
-      vlans:
-      - 102
-      - 202
-  - junos_if: "ge-0/0/0"
-    unit: 102
-    desc: "To netsvr"
-    enabled: "true"
-    if_zone: "edge"
-    ipv4_addr: "10.100.102.253/24"
-    ipv6_addr: "2001:db8:102::f/64"
-    ospf:
-      area: "0.0.0.0"
-      passive: true
-    ospfv3:
-      area: "0.0.0.0"
-      passive: true
-  - junos_if: "ge-0/0/0"
-    unit: 202
-    desc: "To junos-02"
-    enabled: "true"
-    ipv4_addr: "10.100.202.254/24"
-    ipv6_addr: "2001:db8:202::a/64"
-    if_zone: "internal"
-    ospf:
-      area: "0.0.0.0"
-    ospfv3:
-      area: "0.0.0.0"
-  - junos_if: "ge-0/0/1"
-    desc: "To the Internet"
-    unit: 0
-    enabled: "true"
-    ipv4_addr: "dhcp"
-    if_zone: "internet"
-    ospf:
-      area: "0.0.0.0"
-      passive: true
-  - junos_if: "lo0"
-    unit: 0
-    desc: "Loopback"
-    enabled: "true"
-    if_zone: "internal"
-    ipv4_addr: "192.0.2.102/32"
-    ipv6_addr: "2001:db8:902:beef::1/128"
-    ospf:
-      area: "0.0.0.0"
-      passive: true
-    ospfv3:
-      area: "0.0.0.0"
-      passive: true

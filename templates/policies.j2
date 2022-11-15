@@ -1,0 +1,28 @@
+{% for policy in route_policies['rp'] %}
+delete policy-options policy-statement {{ policy['name'] }}
+{% if policy['from']['protocols'] is defined and policy['from']['pfx_list'] is not defined %}
+{% for protocol in policy['from']['protocols'] %}
+set policy-options policy-statement {{ policy['name'] }} from protocol {{ protocol }}
+set policy-options policy-statement {{ policy['name'] }} then {{ policy['action'] }}
+{% endfor %}
+{% endif %}
+{% if policy['from']['pfx_list'] is defined %}
+{% if policy['from']['protocols'] is defined %}
+{% for protocol in policy['from']['protocols'] %}
+set policy-options policy-statement {{ policy['name'] }} term v4 from protocol {{ protocol }}
+{% endfor %}
+{% endif %}
+set policy-options policy-statement {{ policy['name'] }} term v4 from prefix-list {{ policy['from']['pfx_list'] }}_v4
+set policy-options policy-statement {{ policy['name'] }} term v4 then {{ policy['action'] }}
+{% if policy['from']['protocols'] is defined %}
+{% for protocol in policy['from']['protocols'] %}
+set policy-options policy-statement {{ policy['name'] }} term v6 from protocol {{ protocol }}
+{% endfor %}
+{% endif %}
+set policy-options policy-statement {{ policy['name'] }} term v6 from prefix-list {{ policy['from']['pfx_list'] }}_v6
+set policy-options policy-statement {{ policy['name'] }} term v6 then {{ policy['action'] }}
+{% endif %}
+{% if policy['from']['protocols'] is not defined and policy['from']['pfx_list'] is not defined %}
+set policy-options policy-statement {{ policy['name'] }} then {{ policy['action'] }}
+{% endif %}
+{% endfor %}

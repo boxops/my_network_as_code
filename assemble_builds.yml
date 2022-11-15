@@ -1,0 +1,61 @@
+---
+- name: Assemble configuration builds
+  hosts: edge
+  gather_facts: false
+  vars:
+    base_dir: "{{ lookup('env', 'PWD') }}"
+    file_path: "{{ base_dir }}/builds/configs/{{ inventory_hostname }}.conf"
+    assemble_vars:
+      junos_system:
+        - hostname
+        - syslog
+      junos_interface:
+        - subinterfaces
+        - descriptions
+        - l3_interfaces
+      junos_firewall:
+        - remove_default
+        - zones
+        - int_zones
+        - addressbook
+        - globalpolicy
+        - policy
+      junos_routing:
+        - ospf
+        - ospfv3
+        - prefixlists
+        - policies
+        - bgp_group
+      junos_snmp:
+        - snmpv3
+      junos_nat:
+        - nat_overload
+      junos_aaa:
+        - tacacs
+
+  pre_tasks:
+    - name: "Check if the {{ inventory_hostname }}.conf file exists in builds"
+      ansible.builtin.stat:
+        path: "{{ file_path }}"
+      register: build
+
+    - name: "Remove the contents of {{ inventory_hostname }}.conf file if it exists"
+      ansible.builtin.shell: "cat /dev/null > {{ file_path }}"
+      when: build.stat.exists
+
+    - name: "Create {{ inventory_hostname }}.conf file if it does not exist in builds"
+      ansible.builtin.file:
+        path: "{{ file_path }}"
+        owner: "{{ ansible_user_id }}"
+        group: "{{ ansible_user_id }}"
+        mode: "0755"
+        state: touch
+      when: not build.stat.exists
+
+  tasks:
+    - name: "Build /builds/{{ inventory_hostname }}.conf file with templates"
+      ansible.builtin.blockinfile:
+        block: "{{ lookup('template', '{{ item.1 }}.j2') }}"
+        dest: "{{ file_path }}"
+        marker: "# {{ item.0.key }}/{{ item.1 }}"
+      loop: "{{ assemble_vars | dict2items | subelements('value') }}"

@@ -1,0 +1,8 @@
+{% for interface in interfaces %}
+{% if interface['unit'] == 0 %}
+set interfaces {{ interface['name'] }} description "{{ interface['desc'] }}"
+{% endif %}
+{% if interface['unit'] != 0 %}
+set interfaces {{ interface['name'] }} unit {{ interface['unit'] }} description "{{ interface['desc'] }}"
+{% endif %}
+{% endfor %}

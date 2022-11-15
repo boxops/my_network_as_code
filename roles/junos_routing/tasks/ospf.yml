@@ -1,6 +1,6 @@
 ---
 # tasks file for routing
-#
+
 - name: OSPF Process - Router ID
   junipernetworks.junos.junos_config:
     lines: 

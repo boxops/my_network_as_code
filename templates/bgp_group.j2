@@ -1,0 +1,23 @@
+set protocols bgp local-as {{ bgp['local_as'] }}
+{% for group in bgp['groups'] %}
+delete protocols bgp group {{ group['name'] }}
+set protocols bgp group {{ group['name'] }} type {{ group['type'] }}
+set protocols bgp group {{ group['name'] }} description "{{ group['desc'] }}"
+set protocols bgp group {{ group['name'] }} hold-time {{ group['hold'] }}
+set protocols bgp group {{ group['name'] }} log-updown
+{% for policy in group['policies']['import'] %}
+set protocols bgp group {{ group['name'] }} import {{ policy }}
+{% endfor %}
+{% for policy in group['policies']['export'] %}
+set protocols bgp group {{ group['name'] }} export {{ policy }}
+{% endfor %}
+{% for neighbour in group['neighbours'] %}
+{% if 'external' in group['type'] %}
+set protocols bgp group {{ group['name'] }} neighbor {{ neighbour['peer'] }} description "{{ neighbour['desc'] }}"
+set protocols bgp group {{ group['name'] }} neighbor {{ neighbour['peer'] }} peer-as {{ neighbour['remote_as'] }} 
+{% else %}
+set protocols bgp group {{ group['name'] }} neighbor {{ neighbour['peer'] }} description "{{ neighbour['desc'] }}"
+set protocols bgp group {{ group['name'] }} neighbor {{ neighbour['peer'] }} local-address "{{ neighbour['loc_ip'] }}" 
+{% endif %}
+{% endfor %}
+{% endfor %}

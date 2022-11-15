@@ -1,0 +1,12 @@
+{% for interface in interfaces %}
+{% if interface['ipv4_addr'] is defined and interface['enabled'] %}
+set interfaces {{ interface['name'] }} unit {{ interface['unit'] }} family inet address {{ interface['ipv4_addr'] }}
+{% elif interface['ipv4_addr'] is defined and not interface['enabled'] %}
+delete interfaces {{ interface['name'] }} unit {{ interface['unit'] }} family inet address {{ interface['ipv4_addr'] }}
+{% endif %}
+{% if interface['ipv6_addr'] is defined and interface['enabled'] %}
+set interfaces {{ interface['name'] }} unit {{ interface['unit'] }} family inet address {{ interface['ipv6_addr'] }}
+{% elif interface['ipv6_addr'] is defined and not interface['enabled'] %}
+delete interfaces {{ interface['name'] }} unit {{ interface['unit'] }} family inet address {{ interface['ipv6_addr'] }}
+{% endif %}
+{% endfor %}

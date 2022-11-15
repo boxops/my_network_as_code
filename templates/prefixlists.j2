@@ -1,0 +1,8 @@
+{% for prefix_list in route_policies['prefix_lists'] %}
+delete policy-options prefix-list {{ prefix_list['name'] }}
+{% for address in prefix_list['addresses'] %}
+set policy-options prefix-list {{ prefix_list['name'] }} {{ address }}
+{% endfor %}
+set policy-options prefix-list {{ prefix_list['name'] }}_v4 apply-path "policy-options prefix-list {{ prefix_list['name'] }} <[0-9]*.[0-9]*.[0-9]*.[0-9]*>"
+set policy-options prefix-list {{ prefix_list['name'] }}_v6 apply-path "policy-options prefix-list {{ prefix_list['name'] }} <*:*:*>"
+{% endfor %}
